@@ -25,7 +25,7 @@ var loggerDefaults = {
     }
 };
 
-var DailyRotateFile = function (options) {
+var DailyRotateFile = function (options, streamRotator = null ) {
     options = options || {};
     Transport.call(this, options);
 
@@ -77,7 +77,7 @@ var DailyRotateFile = function (options) {
 
         var self = this;
 
-        this.logStream = require('file-stream-rotator').getStream({
+        this.logStream = (streamRotator || require('file-stream-rotator')).getStream({
             filename: path.join(this.dirname, this.filename),
             frequency: options.frequency ? options.frequency : 'custom',
             date_format: options.datePattern ? options.datePattern : 'YYYY-MM-DD',
